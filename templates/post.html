@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - Медиа Ресурс{% endblock %}
+
+{% block content %}
+<div class="post-view">
+    <div class="post-main">
+        <img class="post-image" src="{{ url_for('static', filename=post.path_to_content) }}" alt="{{ post.name }}">
+        <div class="post-info">
+            <div class="post-title">{{ post.name }}</div>
+            <div class="post-meta">
+                <span>{{ post.creator.username }}</span>
+                <span>| {{ post.views }} просмотров</span>
+                <span>| {{ post.time_add_local.strftime('%d.%m.%Y %H:%M') }}</span>
+            </div>
+            <div class="post-actions">
+                <a href="{{ url_for('download_post', post_id=post.id) }}" class="post-download" title="Скачать"><span class="icon-download"></span></a>
+                <form method="POST" action="{{ url_for('rate_post', post_id=post.id) }}" class="post-rating-form">
+                    <div class="post-rating">
+                        {% for i in range(1, 6) %}
+                            <button name="rating" value="{{ i }}" type="submit" class="star-btn">{% if avg_rating >= i %}★{% else %}☆{% endif %}</button>
+                        {% endfor %}
+                    </div>
+                </form>
+                <div class="post-rating-value">{{ avg_rating|round(2) }}/5{% if rating_count %} ({{ rating_count }}){% endif %}</div>
+                {% if current_user.is_authenticated and current_user.id == post.id_creator %}
+                    <form method="POST" action="{{ url_for('delete_post', post_id=post.id) }}" style="display:inline;">
+                        <button type="submit" class="post-delete" title="Удалить" onclick="return confirm('Удалить пост?')">🗑</button>
+                    </form>
+                    <form method="POST" action="{{ url_for('edit_post', post_id=post.id) }}" class="post-edit-form">
+                        <input type="text" name="title" value="{{ post.name }}" class="post-edit-input">
+                        <button type="submit" class="post-edit-btn">✎</button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="post-comments">
+        <div class="comments-title">Комментарии</div>
+        {% if current_user.is_authenticated %}
+            <form method="POST" action="{{ url_for('add_comment', post_id=post.id) }}" class="comment-form">
+                <input type="text" name="text" placeholder="Введите комментарий" required>
+                <button type="submit">Отправить</button>
+            </form>
+        {% endif %}
+        <div class="comments-list">
+            {% for comment in comments %}
+                <div class="comment-item">
+                    <div class="comment-avatar">
+                        <img src="{{ url_for('static', filename='avatars/' + (comment.user.avatar if comment.user.avatar else 'default_avatar.jpg')) }}" alt="{{ comment.user.username }}">
+                    </div>
+                    <div class="comment-body">
+                        <div class="comment-author">{{ comment.user.username }}</div>
+                        <div class="comment-text">{{ comment.text }}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %} 

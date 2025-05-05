@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Личный кабинет - Медиа Ресурс{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Загрузка файла</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="file" class="form-label">Выберите файл</label>
+                        <input type="file" class="form-control" id="file" name="file" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Описание</label>
+                        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Загрузить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Мои файлы</h5>
+            </div>
+            <div class="card-body">
+                {% if media_files %}
+                    <div class="row">
+                        {% for media in media_files %}
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <img src="{{ url_for('static', filename=media.filepath) }}" class="card-img-top" alt="{{ media.filename }}">
+                                    <div class="card-body">
+                                        <h6 class="card-title">{{ media.filename }}</h6>
+                                        <p class="card-text small text-muted">
+                                            Загружено: {{ media.uploaded_at.strftime('%d.%m.%Y %H:%M') }}
+                                        </p>
+                                        {% if media.description %}
+                                            <p class="card-text">{{ media.description }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-center text-muted">У вас пока нет загруженных файлов</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

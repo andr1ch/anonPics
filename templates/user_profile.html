@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.username }} - Медиа Ресурс{% endblock %}
+
+{% block content %}
+<div class="profile-page">
+    <div class="profile-sidebar">
+        <img class="profile-avatar" src="{{ url_for('static', filename='avatars/' + user.avatar) }}" alt="{{ user.username }}">
+        <div class="profile-nick">{{ user.username }}</div>
+        <div class="profile-date">
+            На сайте с
+            {% if user.created_at %}
+                {{ user.created_at_local.strftime('%d.%m.%Y') }}
+            {% elif user.contents and user.contents[0].time_add %}
+                {{ user.contents[0].time_add.strftime('%d.%m.%Y') }}
+            {% else %}
+                —
+            {% endif %}
+        </div>
+        {% if current_user.is_authenticated and current_user.id == user.id %}
+            <a href="{{ url_for('settings') }}" class="profile-settings-btn">Настройки</a>
+        {% endif %}
+    </div>
+    <div class="profile-gallery">
+        {% for post in posts %}
+            <div class="gallery-card">
+                <a href="{{ url_for('view_post', post_id=post.id) }}">
+                    <img src="{{ url_for('static', filename=post.path_to_content) }}" alt="{{ post.name }}">
+                </a>
+                <div class="gallery-meta">
+                    <div class="gallery-title">{{ post.name }}</div>
+                    <div class="gallery-date">{{ post.time_add.strftime('%d.%m.%Y %H:%M') }}</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 

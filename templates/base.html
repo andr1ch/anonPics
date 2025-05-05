@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}anonPics{% endblock %}</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700&display=swap">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar-custom">
+        <div class="navbar-logo">
+            <a href="{{ url_for('index') }}">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="anonPics" height="40">
+            </a>
+        </div>
+        <form class="navbar-search" method="get" action="{{ url_for('index') }}">
+            <div class="search-wrapper">
+                <input type="text" name="search" placeholder="Поиск" value="{{ request.args.get('search', '') }}">
+                <button type="submit" class="search-btn" tabindex="-1">
+                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="10" cy="10" r="7" stroke="#888" stroke-width="2"/>
+                        <line x1="16.2929" y1="16.7071" x2="21" y2="21.4142" stroke="#888" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+        </form>
+        <div class="navbar-actions">
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('upload') }}" class="navbar-btn upload-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 19V5M12 5L6 11M12 5L18 11" stroke="#232324" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Загрузить
+                </a>
+                <a href="{{ url_for('user_profile', username=current_user.username) }}" class="navbar-btn profile-btn">
+                    <img src="{{ url_for('static', filename='avatars/' + (current_user.avatar if current_user.avatar else 'default_avatar.jpg')) }}" alt="Профиль" class="avatar-mini">
+                </a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="navbar-btn profile-btn">
+                    <img src="{{ url_for('static', filename='avatars/default_avatar.jpg') }}" alt="Профиль" class="avatar-mini">
+                </a>
+            {% endif %}
+        </div>
+    </nav>
+    <main>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <div class="flash-message">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html> 

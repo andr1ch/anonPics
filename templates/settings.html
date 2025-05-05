@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Настройки - Медиа Ресурс{% endblock %}
+
+{% block content %}
+<div class="auth-bg">
+    <form class="auth-form" method="POST" enctype="multipart/form-data">
+        <h2>Настройки аккаунта</h2>
+        <div class="settings-avatar-block">
+            <img class="profile-avatar" src="{{ url_for('static', filename='avatars/' + current_user.avatar) }}" alt="{{ current_user.username }}">
+            <input type="file" name="avatar" accept="image/*">
+        </div>
+        <input type="text" name="username" value="{{ current_user.username }}" required>
+        <button type="submit">Сохранить изменения</button>
+        <a href="{{ url_for('logout') }}" class="settings-logout">Выйти из аккаунта</a>
+    </form>
+</div>
+{% endblock %} 

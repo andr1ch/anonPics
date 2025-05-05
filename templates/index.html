@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Главная - Медиа Ресурс{% endblock %}
+
+{% block content %}
+<div class="gallery-grid">
+    {% for post in posts %}
+        <a href="{{ url_for('view_post', post_id=post.id) }}" class="gallery-card-link">
+            <div class="gallery-card">
+                <img src="{{ url_for('static', filename=post.path_to_content) }}" alt="{{ post.name }}">
+                <div class="gallery-meta">
+                    <div class="gallery-title">{{ post.name }}</div>
+                    <div class="gallery-author">{{ post.creator.username }}</div>
+                    <div class="gallery-date">{{ post.time_add_local.strftime('%d.%m.%Y %H:%M') }}</div>
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+</div>
+{% endblock %} 
