@@ -264,9 +264,15 @@ def settings():
 
 if __name__ == '__main__':
     with app.app_context():
+        # Удаляем все таблицы
+        db.drop_all()
+        # Создаем таблицы заново
         db.create_all()
     app.run(debug=True)
 else:
     # Для production (Render.com)
     with app.app_context():
+        # Удаляем все таблицы
+        db.drop_all()
+        # Создаем таблицы заново
         db.create_all() 
