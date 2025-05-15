@@ -722,4 +722,171 @@ main {
     color: inherit;
     text-decoration: none;
     height: 100%;
+}
+
+/* --- Мобильная адаптация: только для max-width: 600px --- */
+@media (max-width: 600px) {
+  body {
+    font-size: 16px;
+    padding: 0;
+  }
+  .navbar-custom {
+    flex-direction: column;
+    padding: 0 8px;
+    height: auto;
+    min-height: 56px;
+  }
+  .navbar-logo img {
+    height: 32px;
+  }
+  .navbar-search {
+    width: 100%;
+    max-width: 100%;
+    margin: 8px 0 0 0;
+    padding: 0 4px;
+  }
+  .navbar-actions {
+    gap: 8px;
+  }
+  .navbar-btn {
+    font-size: 1em;
+    padding: 7px 10px;
+  }
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 16px 0;
+    margin: 12px 4px 0 4px;
+  }
+  .gallery-card {
+    min-height: 140px;
+    border-radius: 10px;
+  }
+  .gallery-card img {
+    height: 120px;
+  }
+  .gallery-meta {
+    padding: 10px 10px 8px 10px;
+    gap: 1px;
+  }
+  .gallery-title {
+    font-size: 1.05rem;
+  }
+  .profile-page {
+    flex-direction: column;
+    gap: 12px;
+    margin: 0 4px;
+  }
+  .profile-sidebar {
+    min-width: 0;
+    max-width: 100%;
+    padding: 18px 8px 12px 8px;
+    border-radius: 10px;
+  }
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+  }
+  .profile-nick {
+    font-size: 1.1rem;
+  }
+  .profile-gallery {
+    grid-template-columns: 1fr;
+    gap: 16px 0;
+  }
+  .post-view {
+    flex-direction: column;
+    gap: 12px;
+    margin: 0 4px;
+  }
+  .post-main {
+    align-items: stretch;
+  }
+  .post-image {
+    max-width: 100%;
+    height: 180px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  .post-title {
+    font-size: 1.2rem;
+  }
+  .post-meta {
+    font-size: 0.95rem;
+    gap: 8px;
+  }
+  .post-comments {
+    min-width: 0;
+    max-width: 100%;
+    padding: 12px 8px 8px 8px;
+    border-radius: 10px;
+  }
+  .comments-title {
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+  }
+  .comment-form input[type="text"] {
+    font-size: 1em;
+    padding: 7px 10px;
+  }
+  .comment-form button {
+    font-size: 1em;
+    padding: 7px 10px;
+    max-width: 80px;
+  }
+  .comment-avatar img {
+    width: 28px;
+    height: 28px;
+  }
+  .comment-body {
+    padding: 6px 8px;
+    font-size: 0.95em;
+  }
+  .auth-bg {
+    min-height: 100vh;
+    padding: 0;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .auth-form {
+    min-width: 0;
+    width: 100vw;
+    max-width: 100vw;
+    border-radius: 0;
+    padding: 24px 8px 16px 8px;
+    box-shadow: none;
+  }
+  .auth-form h2 {
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+  }
+  .auth-form input[type="text"],
+  .auth-form input[type="password"] {
+    width: 100%;
+    font-size: 1em;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+  }
+  .auth-form button {
+    width: 100%;
+    font-size: 1em;
+    padding: 10px 0;
+    margin-top: 8px;
+  }
+  .settings-avatar-block {
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .settings-logout {
+    width: 100%;
+    font-size: 1em;
+    padding: 10px 0;
+    margin-top: 10px;
+  }
+  .flash-messages {
+    top: 60px;
+    width: 96vw;
+    left: 2vw;
+    transform: none;
+  }
 } 
