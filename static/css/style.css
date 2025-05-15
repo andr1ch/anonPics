@@ -636,6 +636,35 @@ main {
     color: #bdbdc0;
 }
 
+.comment-delete-form {
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.comment-delete-btn {
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.comment-delete-btn:hover {
+    opacity: 1;
+}
+
+@media (max-width: 600px) {
+    .comment-delete-btn {
+        font-size: 1.3rem;
+        padding: 4px;
+    }
+}
+
 .profile-page {
     display: flex;
     flex-direction: row;
@@ -1023,16 +1052,14 @@ main {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 2px !important;
+    gap: 4px !important;
     width: auto !important;
   }
   
   .post-rating-value {
-    margin: 0 !important;
+    margin-left: 8px !important;
     font-size: 1.2rem !important;
     color: #fff !important;
-    width: auto !important;
-    text-align: left !important;
   }
   
   .star-btn {
@@ -1042,10 +1069,8 @@ main {
   
   .post-actions-row.rating-row {
     display: flex !important;
-    flex-direction: row !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 12px !important;
     width: 100% !important;
   }
   

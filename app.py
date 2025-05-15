@@ -200,7 +200,7 @@ def add_comment(post_id):
 @login_required
 def edit_post(post_id):
     post = Content.query.get_or_404(post_id)
-    if post.id_creator != current_user.id:
+    if not current_user.is_admin and post.id_creator != current_user.id:
         flash('Нет прав на редактирование')
         return redirect(url_for('view_post', post_id=post_id))
     new_title = request.form.get('title', '').strip()
@@ -214,7 +214,7 @@ def edit_post(post_id):
 @login_required
 def delete_post(post_id):
     post = Content.query.get_or_404(post_id)
-    if post.id_creator != current_user.id:
+    if not current_user.is_admin and post.id_creator != current_user.id:
         flash('Нет прав на удаление')
         return redirect(url_for('view_post', post_id=post_id))
     try:
@@ -262,12 +262,31 @@ def settings():
                     flash('Имя пользователя обновлено')
     return render_template('settings.html')
 
+@app.route('/comment/<int:comment_id>/delete', methods=['POST'])
+@login_required
+def delete_comment(comment_id):
+    comment = Comment.query.get_or_404(comment_id)
+    post = Content.query.get_or_404(comment.id_content)
+    
+    if not current_user.is_admin and post.id_creator != current_user.id:
+        flash('Нет прав на удаление комментариев')
+        return redirect(url_for('view_post', post_id=post.id))
+        
+    db.session.delete(comment)
+    db.session.commit()
+    return redirect(url_for('view_post', post_id=post.id))
+
 if __name__ == '__main__':
     with app.app_context():
         # Удаляем все таблицы
         db.drop_all()
         # Создаем таблицы заново
         db.create_all()
+        # Создаем админа
+        admin = User(username='admin', is_admin=True)
+        admin.set_password('admin')
+        db.session.add(admin)
+        db.session.commit()
     app.run(debug=True)
 else:
     # Для production (Render.com)
@@ -275,4 +294,9 @@ else:
         # Удаляем все таблицы
         db.drop_all()
         # Создаем таблицы заново
-        db.create_all() 
+        db.create_all()
+        # Создаем админа
+        admin = User(username='admin', is_admin=True)
+        admin.set_password('admin')
+        db.session.add(admin)
+        db.session.commit() 
