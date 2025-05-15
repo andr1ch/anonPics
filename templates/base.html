@@ -55,5 +55,16 @@
         {% endwith %}
         {% block content %}{% endblock %}
     </main>
+    <div class="mobile-search-bar">
+        <form method="get" action="{{ url_for('index') }}" style="position:relative; width:100%;">
+            <input type="text" name="search" placeholder="Поиск" value="{{ request.args.get('search', '') }}">
+            <button type="submit" class="search-btn" tabindex="-1">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="10" cy="10" r="7" stroke="#888" stroke-width="2"/>
+                    <line x1="16.2929" y1="16.7071" x2="21" y2="21.4142" stroke="#888" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </form>
+    </div>
 </body>
 </html> 
