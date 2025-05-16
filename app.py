@@ -218,7 +218,8 @@ def delete_post(post_id):
         flash('Нет прав на удаление')
         return redirect(url_for('view_post', post_id=post_id))
     try:
-        os.remove(post.path_to_content)
+        abs_path = os.path.join(app.root_path, 'static', post.path_to_content)
+        os.remove(abs_path)
     except Exception:
         pass
     db.session.delete(post)
